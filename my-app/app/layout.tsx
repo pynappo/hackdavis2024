@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { NavigationMenuDemo } from "./header";
+
+import { AuthProvider } from "@propelauth/nextjs/client";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,7 +19,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <AuthProvider authUrl={process.env.NEXT_PUBLIC_AUTH_URL!}>
+        <body className={inter.className}>
+          <header className="flex space-between">
+            <span>Davis Community Meals and Housing</span>
+            <NavigationMenuDemo />
+          </header>
+          {children}
+        </body>
+      </AuthProvider>
     </html>
   );
 }
