@@ -29,10 +29,14 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <header className="flex space-between bg-teal-300">
-              <span>Davis Community Meals and Housing</span>
-              <Navigation />
-              <ModeToggle />
+            <header className="flex flex-row justify-between bg-teal-300 items-center w-screen">
+              <span className="flex">Davis Community Meals and Housing</span>
+              <span className="flex">
+                <Navigation />
+              </span>
+              <span className="flex">
+                <ModeToggle />
+              </span>
             </header>
             {children}
           </ThemeProvider>
