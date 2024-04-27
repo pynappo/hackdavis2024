@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { NavigationMenuDemo } from "./header";
+import { Navigation } from "./navigation";
 
 import { AuthProvider } from "@propelauth/nextjs/client";
+import { ThemeProvider } from "next-themes";
+import { ModeToggle } from "@/components/ui/mode-toggle";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,11 +23,19 @@ export default function RootLayout({
     <html lang="en">
       <AuthProvider authUrl={process.env.NEXT_PUBLIC_AUTH_URL!}>
         <body className={inter.className}>
-          <header className="flex space-between">
-            <span>Davis Community Meals and Housing</span>
-            <NavigationMenuDemo />
-          </header>
-          {children}
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <header className="flex space-between bg-teal-300">
+              <span>Davis Community Meals and Housing</span>
+              <Navigation />
+              <ModeToggle />
+            </header>
+            {children}
+          </ThemeProvider>
         </body>
       </AuthProvider>
     </html>
