@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@ag-grid-community/react": "^31.2.1",
     "@prisma/client": "^5.13.0",
     "@propelauth/nextjs": "^0.0.125",
     "ag-grid-react": "^31.2.1",

@@ -8,6 +8,7 @@ export const config = {
   matcher: [
     // REQUIRED: Match all request paths that start with /api/auth/
     "/api/auth/(.*)",
+    "/login",
     // OPTIONAL: Don't match any static assets
     "/((?!_next/static|_next/image|favicon.ico).*)",
   ],

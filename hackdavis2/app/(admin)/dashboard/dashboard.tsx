@@ -1,15 +1,28 @@
 "use client";
 import { AgGridReact } from "ag-grid-react"; // AG Grid Component
-import useSWR from "swr";
+import { createItems } from "./actions"; // AG Grid Component
 import "ag-grid-community/styles/ag-grid.css"; // Mandatory CSS required by the grid
 import "ag-grid-community/styles/ag-theme-quartz.css"; // Optional Theme applied to the grid
-import { useCallback, useMemo, useState } from "react";
-import { PageNotFoundError } from "next/dist/shared/lib/utils";
+import { useCallback, useMemo, useState, useEffect } from "react";
 let counter = 0;
 
 export default function Dashboard() {
+  const createItemsWithCounter = createItems.bind(null, counter);
   const [rowData, setRowData] = useState();
 
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    const getCategories = async () => {
+      const res = await fetch("/api/data/categories", {
+        method: "GET",
+      });
+      await res.json().then((data) => {
+        setCategories(data);
+      });
+    };
+    getCategories();
+  }, []);
   // Column Definitions: Defines the columns to be displayed.
   const [colDefs, setColDefs] = useState([
     { field: "name" },
@@ -37,32 +50,27 @@ export default function Dashboard() {
   const onCellEditRequest = useCallback((event) => {
     const oldData = event.data;
     const field = event.colDef.field;
-    const newValue = event.newValue;
     const newData = { ...oldData };
     newData[field] = event.newValue;
-    console.log("onCellEditRequest, updating " + field + " to " + newValue);
     const tx = {
       update: [newData],
     };
-    console.log(newData);
-    fetch("/api/data", {
+    fetch("/api/data/items", {
       method: "PUT",
       body: JSON.stringify(newData),
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         event.api.applyTransaction(tx);
       });
   }, []);
 
   const onGridReady = useCallback(() => {
-    fetch("/api/data", {
+    fetch("/api/data/items", {
       method: "GET",
     })
       .then((res) => res.json())
       .then((json) => {
-        console.log(json);
         setRowData(json);
       });
   }, []);
@@ -77,13 +85,11 @@ export default function Dashboard() {
     };
   }, []);
   const [pendingItems, setPendingItems] = useState([counter]);
-
   const handleAddRow = () => {
     counter += 1;
     setPendingItems([...pendingItems, counter]);
   };
 
-  console.log(pendingItems);
   return (
     <div className="flex justify-between">
       <div
@@ -111,19 +117,29 @@ export default function Dashboard() {
             +
           </button>
         </div>
-        <form>
+        <form action={createItemsWithCounter}>
           {pendingItems.map((id) => {
-            console.log(id);
             return (
               <div className="flex" key={id}>
                 <input
                   className="border-solid border-black border-2 m-1"
                   key={`item ${id}`}
+                  name={`item${id}`}
                 ></input>
                 <input
                   className="border-solid border-black border-2 m-1"
                   key={`quant ${id}`}
+                  name={`quantity${id}`}
                 ></input>
+                <select key={`category${id}`} name={`category${id}`}>
+                  {categories.map((c) => {
+                    return (
+                      <option key={`${id}category${c.id}`} value={c.id}>
+                        {c.name}
+                      </option>
+                    );
+                  })}
+                </select>
               </div>
             );
           })}
