@@ -36,7 +36,7 @@ export default async function Donate() {
             >
               {item.quantity}
             </div>
-            <div className="flex flex-row rounded-lg text-black font-bold p-4 py-2 items-center text-left bg-emerald-400">
+            <div className="flex flex-row rounded-lg text-black font-bold p-4 py-2 items-center text-left bg-emerald-200">
               Donate from:
               <span className="mx-2 flex flex-row items-center justify-center content-center gap-2">
                 <Link
