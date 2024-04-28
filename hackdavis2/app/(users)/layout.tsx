@@ -2,7 +2,6 @@
 import { AuthProvider } from "@propelauth/nextjs/client";
 import Link from "next/link";
 import Image from "next/image";
-import "../globals.css";
 import {
   useUser,
   useRedirectFunctions,
