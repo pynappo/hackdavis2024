@@ -102,10 +102,10 @@ export default function Dashboard() {
         />
       </div>
       <div className="w-[50%] align-top p-2 m-5">
-        <div className="flex">
-          <h3 className="text-lg font-bold align-middle">Add Items:</h3>
+        <div className="flex items-center gap-3">
+          <h3 className="text-lg font-bold align-center">Add Items:</h3>
           <button
-            className="p-1 align-middle border-1 border-solid"
+            className="px-2 align-middle border-2 border-solid border-black"
             onClick={handleAddRow}
           >
             +
@@ -127,6 +127,9 @@ export default function Dashboard() {
               </div>
             );
           })}
+          <button className="border-solid border-2 border-black px-2">
+            INPUT
+          </button>
         </form>
       </div>
     </div>
