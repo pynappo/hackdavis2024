@@ -9,7 +9,7 @@ export default function Home() {
         </h2>
         <a href="/welcome" className="mx-5">
           <h2 className="px-2.5 py-1 text-black bg-white hover:bg-[#52525b] hover:text-white">
-            Login
+            Admin Login
           </h2>
         </a>
       </header>

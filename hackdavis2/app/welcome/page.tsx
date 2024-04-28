@@ -5,11 +5,10 @@ import {
   useRedirectFunctions,
   useLogoutFunction,
 } from "@propelauth/nextjs/client";
-
+import { redirect } from "next/navigation";
 const WelcomeMessage = () => {
   const { loading, user } = useUser();
-  const { redirectToSignupPage, redirectToLoginPage, redirectToAccountPage } =
-    useRedirectFunctions();
+  const { redirectToLoginPage, redirectToAccountPage } = useRedirectFunctions();
   const logoutFn = useLogoutFunction();
 
   if (loading) return <div>Loading...</div>;
@@ -27,7 +26,6 @@ const WelcomeMessage = () => {
       <div>
         <p>You are not logged in</p>
         <button onClick={() => redirectToLoginPage()}>Login</button>
-        <button onClick={() => redirectToSignupPage()}>Signup</button>
       </div>
     );
   }
