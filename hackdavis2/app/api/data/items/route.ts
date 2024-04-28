@@ -12,13 +12,12 @@ export async function GET(request: Request) {
 
 export async function PUT(request: Request) {
   const item = await request.json();
+  delete item.category;
   const updateItem = await prisma.item.update({
     where: {
       id: item.id,
     },
-    data: {
-      ...item,
-    },
+    data: item,
   });
   return Response.json(updateItem);
 }

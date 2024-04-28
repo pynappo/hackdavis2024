@@ -4,7 +4,6 @@ import { createItems } from "./actions"; // AG Grid Component
 import "ag-grid-community/styles/ag-grid.css"; // Mandatory CSS required by the grid
 import "ag-grid-community/styles/ag-theme-quartz.css"; // Optional Theme applied to the grid
 import { useCallback, useMemo, useState, useEffect, useRef } from "react";
-import { revalidatePath } from "next/cache";
 let counter = 0;
 
 export default function Dashboard() {
@@ -105,7 +104,6 @@ export default function Dashboard() {
       body: JSON.stringify(newData),
     }).then((data) => {
       event.api.applyTransaction(tx);
-      revalidatePath("/api/data/items/");
     });
   }, []);
 
@@ -181,7 +179,7 @@ export default function Dashboard() {
           >
             <h3 className="text-lg font-bold align-center">Add Items: +</h3>
           </button>
-          <div className="border-2 border-solid border-black rounded-xl overflow-hidden">
+          <div className="border-2 border-solid border-black rounded-xl overflow-hidden mt-2">
             {pendingItems.map((id) => {
               return (
                 <div
