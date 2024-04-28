@@ -21,7 +21,7 @@ export async function PUT(request: Request) {
       ...item,
     },
   });
-  return Response.json(item);
+  return Response.json(updateItem);
 }
 
 export async function POST(request: Request) {

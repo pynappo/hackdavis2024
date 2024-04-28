@@ -31,6 +31,11 @@ export default function Dashboard() {
             flex: 1,
           },
           {
+            headerName: "Image URL",
+            field: "imageSrc",
+            flex: 1,
+          },
+          {
             headerName: "Category",
             field: "category.name",
             cellEditor: "agSelectCellEditor",
@@ -50,6 +55,11 @@ export default function Dashboard() {
     },
     {
       field: "quantity",
+      flex: 1,
+    },
+    {
+      headerName: "Image URL",
+      field: "imageSrc",
       flex: 1,
     },
     {
