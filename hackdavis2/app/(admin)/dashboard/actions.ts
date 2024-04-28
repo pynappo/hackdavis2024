@@ -15,7 +15,6 @@ export async function createItems(counter: number, formData: FormData) {
     });
   }
 
-  console.log(rawItems);
   // mutate data
   const res = await prisma.item.createMany({
     data: rawItems,

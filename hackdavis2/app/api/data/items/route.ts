@@ -7,7 +7,6 @@ export async function GET(request: Request) {
       category: true,
     },
   });
-  console.log(res);
   return Response.json(res);
 }
 
@@ -26,7 +25,6 @@ export async function PUT(request: Request) {
 
 export async function POST(request: Request) {
   const items = await request.json();
-  console.log(items);
   const res = await prisma.item.createMany({
     data: items,
   });

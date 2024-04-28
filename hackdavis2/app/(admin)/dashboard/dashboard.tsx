@@ -4,6 +4,7 @@ import { createItems } from "./actions"; // AG Grid Component
 import "ag-grid-community/styles/ag-grid.css"; // Mandatory CSS required by the grid
 import "ag-grid-community/styles/ag-theme-quartz.css"; // Optional Theme applied to the grid
 import { useCallback, useMemo, useState, useEffect, useRef } from "react";
+import { revalidatePath } from "next/cache";
 let counter = 0;
 
 export default function Dashboard() {
@@ -85,7 +86,6 @@ export default function Dashboard() {
   const getRowId = useCallback((params) => params.data.id, []);
 
   const onCellEditRequest = useCallback((event) => {
-    console.log(event);
     const oldData = event.data;
     const field = event.colDef.field;
     const newData = { ...oldData };
@@ -105,6 +105,7 @@ export default function Dashboard() {
       body: JSON.stringify(newData),
     }).then((data) => {
       event.api.applyTransaction(tx);
+      revalidatePath("/api/data/items/");
     });
   }, []);
 
@@ -135,7 +136,6 @@ export default function Dashboard() {
   };
   const onRemoveSelected = useCallback(async () => {
     const selectedData = gridRef.current!.api.getSelectedRows();
-    console.log(selectedData);
     await fetch("/api/data/items", {
       method: "DELETE",
       body: JSON.stringify(selectedData),
