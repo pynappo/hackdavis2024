@@ -14,7 +14,6 @@ async function main() {
       },
     },
   });
-  console.log("hi");
 }
 
 await main();

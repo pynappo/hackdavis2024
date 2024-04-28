@@ -24,3 +24,12 @@ export async function createItems(counter: number, formData: FormData) {
   revalidatePath("/dashboard");
   redirect("/dashboard");
 }
+
+export async function getItems() {
+  let res = await prisma.item.findMany();
+  return Response.json(res);
+}
+export async function getCategories() {
+  let res = await prisma.category.findMany();
+  return Response.json(res);
+}
