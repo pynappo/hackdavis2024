@@ -4,6 +4,9 @@ import useSWR from "swr";
 import "ag-grid-community/styles/ag-grid.css"; // Mandatory CSS required by the grid
 import "ag-grid-community/styles/ag-theme-quartz.css"; // Optional Theme applied to the grid
 import { useCallback, useMemo, useState } from "react";
+import { PageNotFoundError } from "next/dist/shared/lib/utils";
+let counter = 0;
+
 export default function Dashboard() {
   const [rowData, setRowData] = useState();
 
@@ -73,7 +76,14 @@ export default function Dashboard() {
       cellRenderer: cellRenderer,
     };
   }, []);
+  const [pendingItems, setPendingItems] = useState([counter]);
 
+  const handleAddRow = () => {
+    counter += 1;
+    setPendingItems([...pendingItems, counter]);
+  };
+
+  console.log(pendingItems);
   return (
     <div className="flex justify-between">
       <div
@@ -92,7 +102,32 @@ export default function Dashboard() {
         />
       </div>
       <div className="w-[50%] align-top p-2 m-5">
-        <h3 className="text-lg font-bold">Add Items:</h3>
+        <div className="flex">
+          <h3 className="text-lg font-bold align-middle">Add Items:</h3>
+          <button
+            className="p-1 align-middle border-1 border-solid"
+            onClick={handleAddRow}
+          >
+            +
+          </button>
+        </div>
+        <form>
+          {pendingItems.map((id) => {
+            console.log(id);
+            return (
+              <div className="flex" key={id}>
+                <input
+                  className="border-solid border-black border-2 m-1"
+                  key={`item ${id}`}
+                ></input>
+                <input
+                  className="border-solid border-black border-2 m-1"
+                  key={`quant ${id}`}
+                ></input>
+              </div>
+            );
+          })}
+        </form>
       </div>
     </div>
   );
